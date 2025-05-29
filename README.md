@@ -1,6 +1,8 @@
 # kyamshanov.github.io
 Deep in thought
 
+## https://kyamshanov.github.io/
+
 
 ### 🧠 Философия познания 2.0
 
