@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Критика современных парадигм проектирования ПО | Critique of Modern Software Design Paradigms</title>
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #2c3e50;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        .section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+        .language-block {
+            margin-bottom: 30px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        ol, ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <img src="/img/me.jpg" alt="Мое фото | My photo" class="profile-img">
+    <h1>Критика современных парадигм проектирования ПО и предложение альтернативного подхода | Critique of Modern Software Design Paradigms and Alternative Approach Proposal</h1>
+    <a href="/" class="back-link">← Назад к статьям | Back to articles</a>
+</header>
+
+<div class="section">
+    <div class="language-block">
+        <h2>Введение</h2>
+        <p>Настоящие размышления посвящены анализу устоявшихся практик разработки программного обеспечения и поиску альтернативных решений, направленных на повышение эффективности процесса.</p>
+
+        <h3>Проблематика унаследованного кода</h3>
+        <p>Сегодня я принял решение полностью переработать ключевую функциональность системы, учитывая, что существующая архитектура, формировавшаяся более трёх лет, перестала соответствовать актуальным требованиям. Многочисленные модификации привели к тому, что первоначальная структура утратила свою гибкость, а поддержка кода становится всё более затруднительной.</p>
+
+        <h3>Дискуссия о тестировании</h3>
+        <p>Вокруг активно обсуждается необходимость написания модульных тестов, однако я остаюсь скептически настроенным по отношению к этой практике. На мой взгляд, ручное тестирование функциональности в контексте всего приложения зачастую оказывается достаточным, тогда как автоматизированное тестирование отдельных модулей представляется избыточной тратой ресурсов.</p>
+        <p>Тем не менее, я прихожу к осознанию, что ключевым аспектом разработки должна оставаться корректность и чистота логики. Она обязана быть тестируемой, поддерживаемой и элегантной.</p>
+
+        <h3>Критика слоистой архитектуры</h3>
+        <p>В попытке решить проблемы сопровождения кода был принят подход разделения на слои data/domain/presentation. Однако в условиях, когда разработка ведётся в рамках единой платформы, языка программирования и модуля, данное разделение зачастую приводит к неоднозначности при выборе места для размещения компонентов. Например, если сущность относится к бизнес-логике, но зависит от специфики платформы, её интерфейс размещается в <em>domain</em>, а реализация — в <em>presentation</em>. В итоге структура фактически сводится к двум слоям: интерфейсам и их реализациям, что ставит под сомнение целесообразность подобной организации.</p>
+
+        <h3>Альтернативный взгляд на архитектурные принципы</h3>
+        <p>Опираясь на практический опыт, предлагается пересмотреть догматические принципы, популяризированные, в частности, Робертом Мартином ("Дядюшкой Бобом"). Во-первых, смена платформы — крайне редкое событие, и в моей практике таких случаев не было. Во-вторых, даже код, соответствующий всем канонам "чистой архитектуры", с течением времени превращается в труднопереносимый <em>legacy</em>, поскольку предугадать особенности будущих платформ невозможно.</p>
+        <p>Более рациональным представляется подход, при котором архитектура проектируется исключительно под текущие требования, с учётом потенциального, но не абстрактного, масштабирования.</p>
+
+        <h3>Предлагаемая методология</h3>
+        <p>В качестве альтернативы предлагается следующая стратегия:</p>
+        <ol>
+            <li><strong>Ориентация на текущую задачу</strong> — проектирование кода должно исходить из актуальных потребностей, без избыточной абстракции.</li>
+            <li><strong>Прогнозирование следующего шага</strong> — умеренное расширение функциональности на основе диалога с владельцем продукта.</li>
+            <li><strong>Формулировка лаконичных интерфейсов</strong> — чёткие контракты между компонентами, минимизирующие неявные зависимости.</li>
+            <li><strong>Композиция вместо наследования</strong> — отказ от глубоких иерархий в пользу гибких, слабосвязанных структур.</li>
+            <li><strong>Типизация как основа надёжности</strong> — строгое определение типов данных для уменьшения ошибок на этапе компиляции.</li>
+        </ol>
+        <p>Таким образом, основной тезис заключается в том, что проектирование должно начинаться с решения конкретной задачи, а не с попытки предугадать все возможные сценарии будущего развития системы. Только после чёткого определения компонентной структуры и их взаимодействий следует переходить к реализации бизнес-логики.</p>
+    </div>
+
+    <div class="divider">———</div>
+
+    <div class="language-block">
+        <h2>Introduction</h2>
+        <p>This reflection is devoted to the analysis of established software development practices and the search for alternative solutions aimed at improving the efficiency of the process.</p>
+
+        <h3>Legacy Code Problematic</h3>
+        <p>Today I decided to completely rework the key functionality of the system, considering that the existing architecture, formed over three years, no longer meets current requirements. Numerous modifications have led to the original structure losing its flexibility, and code maintenance becoming increasingly difficult.</p>
+
+        <h3>Testing Debate</h3>
+        <p>The necessity of writing unit tests is actively discussed, however I remain skeptical about this practice. In my opinion, manual testing of functionality in the context of the entire application often proves sufficient, while automated testing of individual modules seems an excessive waste of resources.</p>
+        <p>Nevertheless, I come to realize that the key aspect of development should remain the correctness and purity of logic. It must be testable, maintainable and elegant.</p>
+
+        <h3>Criticism of Layered Architecture</h3>
+        <p>In an attempt to solve code maintenance problems, the approach of separating into data/domain/presentation layers was adopted. However, when development is conducted within a single platform, programming language and module, this separation often leads to ambiguity in choosing where to place components. For example, if an entity belongs to business logic but depends on platform specifics, its interface is placed in <em>domain</em> while its implementation goes to <em>presentation</em>. Ultimately, the structure effectively reduces to two layers: interfaces and their implementations, which calls into question the advisability of such organization.</p>
+
+        <h3>Alternative View on Architectural Principles</h3>
+        <p>Based on practical experience, I propose to reconsider dogmatic principles popularized in particular by Robert Martin ("Uncle Bob"). Firstly, platform change is an extremely rare event, and in my practice there have been no such cases. Secondly, even code that complies with all the canons of "clean architecture" eventually turns into difficult-to-transfer <em>legacy</em>, since it's impossible to predict the features of future platforms.</p>
+        <p>A more rational approach is when architecture is designed exclusively for current requirements, taking into account potential but not abstract scaling.</p>
+
+        <h3>Proposed Methodology</h3>
+        <p>As an alternative, the following strategy is proposed:</p>
+        <ol>
+            <li><strong>Focus on Current Task</strong> - code design should stem from actual needs, without excessive abstraction.</li>
+            <li><strong>Next Step Forecasting</strong> - moderate functionality expansion based on dialogue with the product owner.</li>
+            <li><strong>Formulating Concise Interfaces</strong> - clear contracts between components that minimize implicit dependencies.</li>
+            <li><strong>Composition Over Inheritance</strong> - rejection of deep hierarchies in favor of flexible, loosely coupled structures.</li>
+            <li><strong>Typing as Reliability Basis</strong> - strict definition of data types to reduce errors at compilation stage.</li>
+        </ol>
+        <p>Thus, the main thesis is that design should begin with solving a specific problem, not with attempting to predict all possible scenarios for the system's future development. Only after clearly defining the component structure and their interactions should one proceed to implement the business logic.</p>
+    </div>
+</div>
+
+<div class="section">
+    <h3>Заключение | Conclusion</h3>
+    <div class="language-block">
+        <p>Представленный подход предлагает прагматичную альтернативу догматическим принципам проектирования ПО, фокусируясь на реальных потребностях разработки, а не на абстрактных идеалах. Этот метод может быть особенно полезен в проектах с чётко определённой предметной областью и стабильной технологической платформой.</p>
+    </div>
+    <div class="language-block">
+        <p>The presented approach offers a pragmatic alternative to dogmatic software design principles, focusing on real development needs rather than abstract ideals. This method may be particularly useful in projects with clearly defined domains and stable technology platforms.</p>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 Deep in thought</p>
+</footer>
+</body>
+</html>
