@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLoC vs Чистая архитектура в Android разработке | BLoC vs Clean Architecture in Android</title>
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <img src="/img/me.jpg" alt="Мое фото | My photo" class="profile-img">
+    <h1>Почему BLoC актуален, а чистая архитектура устаревает | Why BLoC matters while clean architecture fades</h1>
+    <a href="/" class="back-link">← Назад к статьям | Back to articles</a>
+</header>
+
+<div class="section">
+    <div class="language-block">
+        <h2>Введение</h2>
+        <p>В мире Android-разработки идут постоянные споры о выборе архитектуры. Чистая архитектура (Clean Architecture), предложенная Робертом Мартином, долгое время считалась золотым стандартом. Однако современные реалии и появление таких подходов как BLoC (Business Logic Component) заставляют пересмотреть устоявшиеся догмы.</p>
+
+        <h3>Проблемы чистой архитектуры</h3>
+        <p>Основная идея чистой архитектуры - изоляция бизнес-логики от платформы - на практике оказывается избыточной. В реальных проектах переиспользование бизнес-логики между разными платформами происходит крайне редко, а если и происходит, то требует специальных технологий вроде Kotlin Multiplatform.</p>
+        <p>Традиционное разделение на data/domain/presentation слои приводит к:</p>
+        <ul>
+            <li>Созданию множества интерфейсов-прослоек без реальной пользы</li>
+            <li>Путанице между domain и presentation логикой</li>
+            <li>Избыточному количеству boilerplate-кода</li>
+        </ul>
+
+        <h3>Преимущества BLoC подхода</h3>
+        <p>BLoC предлагает альтернативу, основанную на:</p>
+        <ol>
+            <li><strong>Компонентности</strong> - вместо слоёв появляются независимые компоненты бизнес-логики</li>
+            <li><strong>Композиции</strong> - вместо наследования и сложных иерархий</li>
+            <li><strong>Инкапсуляции</strong> - чёткие границы через State/Event модель</li>
+            <li><strong>Реактивности</strong> - естественная работа с потоками данных</li>
+        </ol>
+
+        <h3>Практические сравнения</h3>
+        <p>Рассмотрим реализацию функции аутентификации в обоих подходах:</p>
+
+        <h4>Чистая архитектура:</h4>
+        <pre><code>// Domain
+interface AuthRepository
+class AuthUseCase(repo: AuthRepository)
+
+// Data
+class AuthRepositoryImpl: AuthRepository
+
+// Presentation
+class AuthViewModel(useCase: AuthUseCase)</code></pre>
+
+        <h4>BLoC подход:</h4>
+        <pre><code>class AuthBloc(authService: AuthService) {
+    private val _state = MutableStateFlow&lt;AuthState&gt;(Idle)
+    val state: StateFlow&lt;AuthState&gt; = _state.asStateFlow()
+
+    fun sendEvent(event: AuthEvent) { ... }
+}</code></pre>
+
+        <p>BLoC версия более компактна и содержит всю логику в одном месте, сохраняя при этом тестируемость.</p>
+
+        <h3>Когда Clean Architecture ещё актуальна?</h3>
+        <p>Чистая архитектура сохраняет ценность в:</p>
+        <ul>
+            <li>KMM проектах с общим кодом для разных платформ</li>
+            <li>Очень крупных enterprise приложениях</li>
+            <li>Командах, где строгие стандарты важнее скорости разработки</li>
+        </ul>
+    </div>
+
+    <div class="divider">———</div>
+
+    <div class="language-block">
+        <h2>Introduction</h2>
+        <p>In the world of Android development, there are constant debates about architecture choice. Clean Architecture, proposed by Robert Martin, was long considered the gold standard. However, modern realities and the emergence of approaches like BLoC (Business Logic Component) force us to reconsider established dogmas.</p>
+
+        <h3>Problems of Clean Architecture</h3>
+        <p>The main idea of Clean Architecture - isolating business logic from the platform - proves excessive in practice. In real projects, reuse of business logic between different platforms is extremely rare, and when it does happen, it requires special technologies like Kotlin Multiplatform.</p>
+        <p>The traditional separation into data/domain/presentation layers leads to:</p>
+        <ul>
+            <li>Creation of numerous interface wrappers without real benefit</li>
+            <li>Confusion between domain and presentation logic</li>
+            <li>Excessive boilerplate code</li>
+        </ul>
+
+        <h3>Advantages of BLoC Approach</h3>
+        <p>BLoC offers an alternative based on:</p>
+        <ol>
+            <li><strong>Component-based design</strong> - instead of layers, we get independent business logic components</li>
+            <li><strong>Composition</strong> - instead of inheritance and complex hierarchies</li>
+            <li><strong>Encapsulation</strong> - clear boundaries through State/Event model</li>
+            <li><strong>Reactivity</strong> - natural work with data streams</li>
+        </ol>
+
+        <h3>Practical Comparisons</h3>
+        <p>Let's examine the implementation of authentication feature in both approaches:</p>
+
+        <h4>Clean Architecture:</h4>
+        <pre><code>// Domain
+interface AuthRepository
+class AuthUseCase(repo: AuthRepository)
+
+// Data
+class AuthRepositoryImpl: AuthRepository
+
+// Presentation
+class AuthViewModel(useCase: AuthUseCase)</code></pre>
+
+        <h4>BLoC Approach:</h4>
+        <pre><code>class AuthBloc(authService: AuthService) {
+    private val _state = MutableStateFlow&lt;AuthState&gt;(Idle)
+    val state: StateFlow&lt;AuthState&gt; = _state.asStateFlow()
+
+    fun sendEvent(event: AuthEvent) { ... }
+}</code></pre>
+
+        <p>The BLoC version is more compact and contains all logic in one place while maintaining testability.</p>
+
+        <h3>When is Clean Architecture Still Relevant?</h3>
+        <p>Clean Architecture retains value in:</p>
+        <ul>
+            <li>KMM projects with shared code for different platforms</li>
+            <li>Very large enterprise applications</li>
+            <li>Teams where strict standards are more important than development speed</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <h3>Заключение | Conclusion</h3>
+    <div class="language-block">
+        <p>BLoC предлагает более современный и прагматичный подход к организации кода в Android-разработке. Он сохраняет ключевые преимущества чистой архитектуры (тестируемость, разделение ответственности), но без избыточного усложнения. Для большинства современных мобильных проектов BLoC оказывается более подходящим выбором.</p>
+    </div>
+    <div class="language-block">
+        <p>BLoC offers a more modern and pragmatic approach to code organization in Android development. It preserves the key advantages of clean architecture (testability, separation of concerns) but without excessive complexity. For most modern mobile projects, BLoC proves to be a more suitable choice.</p>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 Deep in thought</p>
+</footer>
+</body>
+</html>
