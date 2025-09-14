@@ -42,7 +42,7 @@ h3 {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
 
@@ -78,23 +78,100 @@ ol, ul {
 li {
     margin-bottom: 8px;
 }
-        .discussion-links p {
-            margin-bottom: 0.5em;
-            font-weight: bold;
-            display: inline;
-            margin-right: 15px;
-        }
-        .discussion-links a {
-            display: inline-block;
-            margin-right: 15px;
-            color: #3A5AFF;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 5px 10px;
-            border-radius: 4px;
-            background-color: #f5f7ff;
-        }
-        .discussion-links a:hover {
-            background-color: #e0e5ff;
-            text-decoration: none;
-        }
+
+.discussion-links p {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    display: inline;
+    margin-right: 15px;
+}
+
+.discussion-links a {
+    display: inline-block;
+    margin-right: 15px;
+    color: #3A5AFF;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #f5f7ff;
+}
+
+.discussion-links a:hover {
+    background-color: #e0e5ff;
+    text-decoration: none;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin: 1.5em 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* Улучшенные стили для научного контента */
+.article-meta {
+    color: #7f8c8d;
+    font-size: 0.9em;
+    margin-bottom: 2em;
+    text-align: center;
+}
+
+.abstract {
+    background-color: #f8f9fa;
+    padding: 1.5em;
+    border-left: 4px solid #3498db;
+    margin-bottom: 1.5em;
+    border-radius: 0 4px 4px 0;
+}
+
+.keywords {
+    margin-top: 1em;
+    font-style: italic;
+}
+
+.references {
+    padding-left: 2em;
+}
+
+.references li {
+    margin-bottom: 1em;
+    text-align: justify;
+}
+
+.back-link {
+    color: #3498db;
+    text-decoration: none;
+    margin-bottom: 1em;
+    display: inline-block;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
